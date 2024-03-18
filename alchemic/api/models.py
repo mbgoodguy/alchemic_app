@@ -1,5 +1,3 @@
-import uuid
-
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -15,7 +13,7 @@ class Ingredient(BaseModel):
 class IngredientPayload(BaseModel):
     """Ingredient payload model."""
 
-    name: str = Field(min_length=1, max_length=127)
+    name: str = Field(min_length=2, max_length=127)
 
 
 class Potion(BaseModel):
@@ -32,4 +30,4 @@ class PotionPayload(BaseModel):
     """Potion payload model."""
 
     name: str = Field(min_length=1, max_length=127)
-    ingredients: list[uuid.UUID] = Field(min_length=1)
+    ingredients: list[int] = Field(min_length=1)

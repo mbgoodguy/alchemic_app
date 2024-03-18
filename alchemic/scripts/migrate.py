@@ -22,7 +22,10 @@ async def migrate_tables() -> None:
     logger.info("Done migrating")
 
 
-print(where_to_save_db)
-
 if __name__ == "__main__":
-    asyncio.run(migrate_tables())
+    try:
+        asyncio.run(migrate_tables())
+        print('Миграции проведены успешно')
+        print(f'Путь к файлу БД: {where_to_save_db}')
+    except Exception as e:
+        print(f'Прозошла ошибка: {e}')
