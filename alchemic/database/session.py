@@ -8,7 +8,6 @@ from sqlalchemy.ext.asyncio import (
 )
 
 from alchemic.config import settings
-from database.models import Base
 
 
 async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
@@ -16,8 +15,8 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     factory = async_sessionmaker(engine)
     async with factory() as session:
         try:
-            async with engine.begin() as conn:
-                await conn.run_sync(Base.metadata.create_all)
+            # async with engine.begin() as conn:  # Автоматическое проведение миграций (нежелательно)
+            #     await conn.run_sync(Base.metadata.create_all)  # т.к лишние запросы, отсутствие контроля изменений)
             yield session
             await session.commit()
         except exc.SQLAlchemyError as error:

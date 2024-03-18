@@ -4,11 +4,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api import models
-from database import models as db_models
-from database.session import get_db_session
+from alchemic.database import models as db_models
+from alchemic.database.session import get_db_session
+from alchemic.api import models
 
-router = APIRouter(prefix="/v1", tags=["v1"])
+router = APIRouter(prefix="/v1", tags=["Alchemist app"])
 
 
 @router.post("/ingredients", status_code=status.HTTP_201_CREATED)
