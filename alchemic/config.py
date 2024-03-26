@@ -2,14 +2,13 @@ import logging
 import os
 
 from dotenv import load_dotenv
-from pydantic_settings import BaseSettings
 
 logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 
 
-class Settings(BaseSettings):
+class Settings:
     """App settings."""
 
     project_name: str = "alchemist"

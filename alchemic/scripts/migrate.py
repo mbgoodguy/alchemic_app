@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import os
 from pathlib import Path
@@ -8,7 +7,8 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from database.models import Base
 
 logger = logging.getLogger()
-where_to_save_db = os.path.join(Path(__file__).parent.parent.parent, 'db.sqlite3')  # в корень проекта
+where_to_save_db = Path(__file__).parent.parent / 'db.sqlite3'  # в alchemic (на уровне с README)
+print(where_to_save_db)
 
 
 async def migrate_tables() -> None:
@@ -20,12 +20,3 @@ async def migrate_tables() -> None:
         await conn.run_sync(Base.metadata.create_all)
 
     logger.info("Done migrating")
-
-
-if __name__ == "__main__":
-    try:
-        asyncio.run(migrate_tables())
-        print('Миграции проведены успешно')
-        print(f'Путь к файлу БД: {where_to_save_db}')
-    except Exception as e:
-        print(f'Прозошла ошибка: {e}')
