@@ -7,11 +7,27 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-from alchemic.config import settings
+from alchemic.config import postgres_settings
 
 
+# for sqlite
+# async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
+#     engine = create_async_engine(settings.database_url)
+#     factory = async_sessionmaker(engine)
+#     async with factory() as session:
+#         try:
+#             # async with engine.begin() as conn:  # Автоматическое проведение миграций (нежелательно)
+#             #     await conn.run_sync(Base.metadata.create_all)  # т.к лишние запросы, отсутствие контроля изменений)
+#             yield session
+#             await session.commit()
+#         except exc.SQLAlchemyError as error:
+#             await session.rollback()
+#             raise
+
+
+# for postgres
 async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
-    engine = create_async_engine(settings.database_url)
+    engine = create_async_engine(postgres_settings.DB_URL)
     factory = async_sessionmaker(engine)
     async with factory() as session:
         try:
