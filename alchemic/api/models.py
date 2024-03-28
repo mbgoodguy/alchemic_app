@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -24,6 +26,7 @@ class Potion(BaseModel):
     pk: int
     name: str
     ingredients: list[Ingredient]
+    description: Optional[str | None] = Field(max_length=150, default=None)
 
 
 class PotionPayload(BaseModel):
@@ -31,3 +34,4 @@ class PotionPayload(BaseModel):
 
     name: str = Field(min_length=1, max_length=127)
     ingredients: list[int] = Field(min_length=1)
+    description: Optional[str | None] = Field(max_length=150, default=None)

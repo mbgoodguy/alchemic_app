@@ -1,4 +1,5 @@
-from sqlalchemy import Column, ForeignKey, Table, orm, Integer
+from sqlalchemy import Column, ForeignKey, Table, orm, Integer, String
+from sqlalchemy.orm import mapped_column
 
 
 class Base(orm.DeclarativeBase):
@@ -36,3 +37,4 @@ class Potion(Base):
         backref="potions",
         lazy="selectin",
     )
+    description: orm.Mapped[str] = mapped_column(String(length=150), nullable=True)
