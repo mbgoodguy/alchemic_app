@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from alchemic.api import models
 from alchemic.database import models as db_models
 from alchemic.database.session import get_db_session
-from exceptions import non_existent_potion, non_existent_ingredient
+from exceptions import CustomException
 
 router = APIRouter(prefix="/v1", tags=["Alchemist app"])
 
@@ -37,7 +37,7 @@ async def get_ingredient(
 ) -> models.Ingredient:
     ingredient = await session.get(db_models.Ingredient, pk)
     if ingredient is None:
-        non_existent_ingredient()
+        CustomException.non_existent_ingredient()
     return models.Ingredient.model_validate(ingredient)
 
 
@@ -74,7 +74,7 @@ async def get_potion(
 ) -> models.Potion:
     potion = await session.get(db_models.Potion, pk)
     if potion is None:
-        non_existent_potion()
+        CustomException.non_existent_potion()
     return models.Potion.model_validate(potion)
 
 
@@ -90,7 +90,7 @@ async def update_potion(
         print(e)
 
     if potion is None:
-        non_existent_potion()
+        CustomException.non_existent_potion()
 
     # Получаем экземпляры Ingredient по их первичным ключам
     ingredients = await session.execute(select(db_models.Ingredient).filter(db_models.Ingredient.pk.in_(potion_data.ingredients)))
